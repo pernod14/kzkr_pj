@@ -68,48 +68,8 @@ def callback():
 def message_text(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text)
-    )
-
-# ボタンの入力を受け取るPostbackEvent
-@handler.add(PostbackEvent)
-def on_postback(event):
-    reply_token = event.reply_token
-    user_id = event.source.user_id
-    postback_msg = event.postback.data
-
-    if postback_msg == 'is_show=1':
-        line_bot_api.push_message(
-            to=user_id,
-            messages=TextSendMessage(text='is_showオプションは1だよ！')
-        )
-    elif postback_msg == 'is_show=0':
-        line_bot_api.push_message(
-            to=user_id,
-            messages=TextSendMessage(text='is_showオプションは0だよ！')
-        )
-
-# ボタンを送信する
-def send_button(event, user_id):
-    message_template = ButtonsTemplate(
-      text='BTC_JPYの通知',
-      actions=[
-          PostbackTemplateAction(
-            label='ON',
-            data='is_show=1'
-          ),
-          PostbackTemplateAction(
-            label='OFF',
-            data='is_show=0'
-          )
-      ]
-    )
-    line_bot_api.push_message(
-        to=user_id,
-        messages=TemplateSendMessage(
-            alt_text='button template',
-            template=message_template
-        )
+        #TextSendMessage(text=event.message.text)
+        TextSendMessage(text='static reply')
     )
 
 if __name__ == "__main__":
