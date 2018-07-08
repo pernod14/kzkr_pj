@@ -30,7 +30,7 @@ from linebot.models import ( # 使用するモデル(イベント, メッセー�
 
 app = Flask(__name__)
 
-get channel_secret and channel_access_token from your environment variable
+# get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
 channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
 if channel_secret is None:
