@@ -2,16 +2,6 @@
 
 import os
 import sys
-import json
-# from decimal import Decimal #金融系の計算で丸め誤差を排除するために必要なライブラリ
-
-#try:
-#    import MySQLdb
-#except:
-#    import pymysql
-#    pymysql.install_as_MySQLdb()
-#    import MySQLdb
-
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -21,11 +11,8 @@ from linebot import (
 from linebot.exceptions import (
     InvalidSignatureError
 )
-from linebot.models import ( # 使用するモデル(イベント, メッセージ, アクションなど)を列挙
-    FollowEvent, UnfollowEvent, MessageEvent, PostbackEvent,
-    TextMessage, TextSendMessage, TemplateSendMessage,
-    ButtonsTemplate, CarouselTemplate, CarouselColumn,
-    PostbackTemplateAction
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
 )
 
 app = Flask(__name__)
