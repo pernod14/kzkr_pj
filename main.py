@@ -24,7 +24,10 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    FollowEvent, UnfollowEvent, MessageEvent, PostbackEvent,
+    TextMessage, TextSendMessage, TemplateSendMessage,
+    ButtonsTemplate, CarouselTemplate, CarouselColumn,
+    PostbackTemplateAction
 )
 
 app = Flask(__name__)
@@ -68,6 +71,46 @@ def message_text(event):
         TextSendMessage(text=event.message.text)
     )
 
+# ボタンの入力を受け取るPostbackEvent
+@handler.add(PostbackEvent)
+def on_postback(event):
+    reply_token = event.reply_token
+    user_id = event.source.user_id
+    postback_msg = event.postback.data
+
+    if postback_msg == 'is_show=1':
+        line_bot_api.push_message(
+            to=user_id,
+            messages=TextSendMessage(text='is_showオプションは1だよ！')
+        )
+    elif postback_msg == 'is_show=0':
+        line_bot_api.push_message(
+            to=user_id,
+            messages=TextSendMessage(text='is_showオプションは0だよ！')
+        )
+
+# ボタンを送信する
+def send_button(event, user_id):
+    message_template = ButtonsTemplate(
+      text='BTC_JPYの通知',
+      actions=[
+          PostbackTemplateAction(
+            label='ON',
+            data='is_show=1'
+          ),
+          PostbackTemplateAction(
+            label='OFF',
+            data='is_show=0'
+          )
+      ]
+    )
+    line_bot_api.push_message(
+        to=user_id,
+        messages=TemplateSendMessage(
+            alt_text='button template',
+            template=message_template
+        )
+    )
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
