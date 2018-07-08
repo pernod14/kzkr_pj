@@ -3,14 +3,14 @@
 import os
 import sys
 import json
-from decimal import Decimal #金融系の計算で丸め誤差を排除するために必要なライブラリ
+# from decimal import Decimal #金融系の計算で丸め誤差を排除するために必要なライブラリ
 
-try:
-    import MySQLdb
-except:
-    import pymysql
-    pymysql.install_as_MySQLdb()
-    import MySQLdb
+#try:
+#    import MySQLdb
+#except:
+#    import pymysql
+#    pymysql.install_as_MySQLdb()
+#    import MySQLdb
 
 from argparse import ArgumentParser
 
