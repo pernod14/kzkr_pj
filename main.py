@@ -30,27 +30,18 @@ from linebot.models import ( # 使用するモデル(イベント, メッセー�
 
 app = Flask(__name__)
 
-ABS_PATH = os.path.dirname(os.path.abspath(sys.argv[0]))
-with open(ABS_PATH+'/conf.json', 'r') as f:
-    CONF_DATA = json.load(f)
-
-CHANNEL_SECRET = CONF_DATA['CHANNEL_SECRET']
-CHANNEL_ACCESS_TOKEN = CONF_DATA['CHANNEL_ACCESS_TOKEN']
-REMOTE_HOST = CONF_DATA['REMOTE_HOST']
-REMOTE_DB_NAME = CONF_DATA['REMOTE_DB_NAME']
-REMOTE_DB_USER = CONF_DATA['REMOTE_DB_USER']
-REMOTE_DB_PASS = CONF_DATA['REMOTE_DB_PASS']
-REMOTE_DB_TB = CONF_DATA['REMOTE_DB_TB']
-
-if CHANNEL_SECRET is None:
-    print('Specify LINE_CHANNEL_SECRET.')
+get channel_secret and channel_access_token from your environment variable
+channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
+channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
+if channel_secret is None:
+    print('Specify LINE_CHANNEL_SECRET as environment variable.')
     sys.exit(1)
-if CHANNEL_ACCESS_TOKEN is None:
-    print('Specify LINE_CHANNEL_ACCESS_TOKEN.')
+if channel_access_token is None:
+    print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
     sys.exit(1)
 
-line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(CHANNEL_SECRET)
+line_bot_api = LineBotApi(channel_access_token)
+handler = WebhookHandler(channel_secret)
 
 # https://アプリ名.herokuapp.com/test にアクセスしてtest okが表示されればデプロイ自体は成功してる
 # flaskは@app.route("/ディレクトリ名")でルーティングする
