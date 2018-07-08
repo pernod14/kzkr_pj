@@ -50,7 +50,7 @@ def callback():
 
     # get request body as text
     body = request.get_data(as_text=True)
-    body = 'hoge'
+    #body = 'hoge'
     app.logger.info("Request body: " + body)
 
     # handle webhook body
